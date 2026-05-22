@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي الأدوية | Vitalis Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .game-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 40px;
+        }
+        .drag-source {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .drug-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            cursor: grab;
+            text-align: center;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .drop-zone {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 500px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .target-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .target-box.hover {
+            border-color: var(--primary);
+            background: var(--accent);
+        }
+        .target-box h4 {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .score-panel {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="students.html">مركز الطلاب</a></li>
+                <li><a href="#" class="btn-primary">المستوى: محترف</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 120px;">
+        <div class="score-panel">
+            <h2>لعبة مطابقة الأدوية (Pharmacology Challenge)</h2>
+            <p>قم بسحب الدواء ووضعه فوق آلية العمل (Mechanism of Action) الصحيحة له.</p>
+            <div style="font-size: 1.5rem; margin-top: 10px;">النقاط: <span id="gameScore">0</span></div>
+        </div>
+
+        <div class="game-grid">
+            <div class="drag-source" id="drugSource">
+                <div class="drug-card" draggable="true" ondragstart="drag(event)" id="drug1" data-target="target1">Aspirin</div>
+                <div class="drug-card" draggable="true" ondragstart="drag(event)" id="drug2" data-target="target2">Metformin</div>
+                <div class="drug-card" draggable="true" ondragstart="drag(event)" id="drug3" data-target="target3">Warfarin</div>
+                <div class="drug-card" draggable="true" ondragstart="drag(event)" id="drug4" data-target="target4">Amlodipine</div>
+                <div class="drug-card" draggable="true" ondragstart="drag(event)" id="drug5" data-target="target5">Salbutamol</div>
+            </div>
+
+            <div class="drop-zone">
+                <div class="target-box" ondrop="drop(event)" ondragover="allowDrop(event)" id="target1">
+                    <h4>تثبيط إنزيم COX-1 و COX-2</h4>
+                </div>
+                <div class="target-box" ondrop="drop(event)" ondragover="allowDrop(event)" id="target2">
+                    <h4>تثبيط إنتاج الجلوكوز في الكبد</h4>
+                </div>
+                <div class="target-box" ondrop="drop(event)" ondragover="allowDrop(event)" id="target3">
+                    <h4>تثبيط إعادة تدوير فيتامين K</h4>
+                </div>
+                <div class="target-box" ondrop="drop(event)" ondragover="allowDrop(event)" id="target4">
+                    <h4>حصر قنوات الكالسيوم (CCB)</h4>
+                </div>
+                <div class="target-box" ondrop="drop(event)" ondragover="allowDrop(event)" id="target5">
+                    <h4>تحفيز مستقبلات Beta-2 في الرئة</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.target.classList.add('hover');
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const target = ev.target.closest('.target-box');
+            target.classList.remove('hover');
+            
+            const data = ev.dataTransfer.getData("text");
+            const draggedEl = document.getElementById(data);
+            
+            if (draggedEl.getAttribute('data-target') === target.id) {
+                target.appendChild(draggedEl);
+                draggedEl.style.background = "#dcfce7";
+                draggedEl.style.borderColor = "#22c55e";
+                draggedEl.draggable = false;
+                score += 200;
+                document.getElementById('gameScore').innerText = score;
+                
+                // Update global state
+                if (window.addVitalisPoints) {
+                    const drugName = draggedEl.innerText;
+                    window.addVitalisPoints(200, `مطابقة دواء ${drugName} بنجاح`);
+                }
+                
+                checkWin();
+            } else {
+                target.style.borderColor = "#ef4444";
+                setTimeout(() => target.style.borderColor = "transparent", 500);
+            }
+        }
+
+        function checkWin() {
+            if (document.getElementById('drugSource').children.length === 0) {
+                alert("تهانينا! لقد أتقنت آليات عمل هذه الأدوية.");
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

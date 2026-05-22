@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الكيمياء الحيوية السريرية | Vitalis Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bio-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+        }
+        .topic-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            transition: 0.3s;
+        }
+        .topic-card:hover {
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.1);
+        }
+        .pathway-diagram {
+            width: 100%;
+            background: #f1f5f9;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px dashed var(--primary);
+        }
+        .clinical-pearl {
+            background: #fff9db;
+            border-right: 5px solid #fcc419;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px 0 0 10px;
+            font-style: italic;
+        }
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        .step-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .step-list li i {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="students.html">مركز الطلاب</a></li>
+                <li><a href="diagnostic-quiz.html" class="btn-primary">اختبر نفسك</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="bio-hero">
+        <div class="container">
+            <h1>أسرار الكيمياء الحيوية السريرية</h1>
+            <p>تبسيط أعقد المسارات الاستقلابية وربطها بالممارسة الطبية اليومية.</p>
+        </div>
+    </header>
+
+    <main class="container" style="margin-top: 60px;">
+        <div class="topic-card">
+            <span class="badge">الأيض والاستقلاب</span>
+            <h2>1. دورة كريبس (TCA Cycle) وتطبيقاتها السريرية</h2>
+            <p>تعتبر دورة كريبس المحرك الأساسي لإنتاج الطاقة في الخلية. لكن أهميتها تتجاوز إنتاج ATP إلى الربط بين استقلاب الكربوهيدرات والدهون والبروتينات.</p>
+            
+            <div class="pathway-diagram">
+                <i class="fas fa-project-diagram" style="font-size: 3rem; color: var(--primary); margin-bottom: 10px;"></i>
+                <p>[مخطط تفاعلي لدورة كريبس - يظهر تدفق ذرات الكربون]</p>
+            </div>
+
+            <ul class="step-list">
+                <li><i class="fas fa-check-circle"></i> تحويل Acetyl-CoA إلى Citrate بواسطة إنزيم Citrate Synthase.</li>
+                <li><i class="fas fa-check-circle"></i> إنتاج NADH و FADH2 كحوامل للإلكترونات.</li>
+                <li><i class="fas fa-check-circle"></i> تنظيم الدورة بواسطة مستويات ATP/ADP و NADH/NAD+.</li>
+            </ul>
+
+            <div class="clinical-pearl">
+                <strong><i class="fas fa-lightbulb"></i> معلومة سريرية (Clinical Pearl):</strong>
+                نقص فيتامين B1 (Thiamine) يؤدي إلى خلل في عمل إنزيم Pyruvate Dehydrogenase، مما يعيق دخول البيروفات إلى دورة كريبس ويسبب تراكم حمض اللاكتيك (Lactic Acidosis).
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <span class="badge">الإنزيمات السريرية</span>
+            <h2>2. حركية الإنزيمات (Enzyme Kinetics) في التشخيص</h2>
+            <p>فهم معادلة Michaelis-Menten ليس مجرد رياضيات، بل هو المفتاح لفهم كيفية عمل الأدوية المثبطة للإنزيمات وتشخيص أمراض الكبد والقلب.</p>
+            
+            <div class="pathway-diagram">
+                <i class="fas fa-chart-line" style="font-size: 3rem; color: var(--primary); margin-bottom: 10px;"></i>
+                <p>[منحنى Vmax و Km - تفاعلي لمقارنة أنواع التثبيط]</p>
+            </div>
+
+            <div class="clinical-pearl">
+                <strong><i class="fas fa-stethoscope"></i> الربط البرمجي:</strong>
+                يقوم برنامج Vitalis Clinic بتحليل مستويات الإنزيمات (ALT, AST, CK-MB) ومقارنتها بالمنحنيات الحركية الطبيعية لإعطاء تنبيهات مبكرة عن تلف الأنسجة.
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <span class="badge">البيولوجيا الجزيئية</span>
+            <h2>3. استقلاب البورين والبيريميدين وأمراض النقرس</h2>
+            <p>دراسة المسارات التصنيعية للقواعد النيتروجينية وفهم دور إنزيم Xanthine Oxidase في إنتاج حمض البول (Uric Acid).</p>
+            <a href="#" class="btn-primary">تنزيل ملخص الـ PDF الكامل</a>
+        </div>
+    </main>
+
+    <footer style="margin-top:100px;">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 أكاديمية Vitalis الطبية | إعداد: عمر عبد العزيز</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

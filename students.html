@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية Vitalis | مركز التميز الطبي</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --accent-glow: rgba(37, 99, 235, 0.15);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .academy-container {
+            display: grid;
+            grid-template-columns: 1fr 300px; /* Sidebar removed from grid */
+            gap: 1.5rem;
+            padding: 20px;
+            margin-top: 100px;
+            margin-right: 80px; /* Room for fixed sidebar */
+        }
+
+        /* Futuristic Full-Height Sidebar */
+        .slim-sidebar {
+            background: var(--primary);
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 0 30px; /* Start below navbar */
+            gap: 2rem;
+            color: white;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+            border-radius: 0; /* Traditional full edge */
+        }
+
+        .slim-sidebar i {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            opacity: 0.7;
+        }
+
+        .slim-sidebar i:hover, .slim-sidebar i.active {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Main Content Area */
+        .main-deck {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .welcome-banner {
+            background: white;
+            padding: 40px;
+            border-radius: 32px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .welcome-banner h1 {
+            font-size: 2.8rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .banner-blur {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: var(--primary);
+            filter: blur(80px);
+            opacity: 0.1;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .module-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .module-card:hover {
+            transform: translateY(-12px);
+            background: white;
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.1);
+            border-color: var(--primary);
+        }
+
+        .module-card .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: var(--primary);
+            transition: 0.3s;
+        }
+
+        .module-card:hover .icon-box {
+            background: var(--primary);
+            color: white;
+            transform: rotate(-10deg);
+        }
+
+        /* Right Stats Panel */
+        .stats-panel {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-radius: 32px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #e2e8f0; /* Default empty state */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        .progress-circle::after {
+            content: var(--progress-text, "0%");
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.4rem;
+        }
+
+        .quick-link {
+            padding: 12px;
+            border-radius: 12px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .quick-link:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Custom Scrollbar */
+        .main-deck::-webkit-scrollbar {
+            width: 6px;
+        }
+        .main-deck::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span> Academy</span>
+            </div>
+            <div class="user-profile">
+                <span id="liveClock">00:00</span>
+                <span id="userRank" class="badge" style="margin: 0 10px;">طالب متدرب</span>
+                <span>د. عمر عبد العزيز</span>
+                <i class="fas fa-user-circle" style="font-size: 2rem; color: var(--primary);"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div id="notifContainer"></div>
+
+    <div class="academy-container">
+        <!-- Slim Nav -->
+        <aside class="slim-sidebar">
+            <i class="fas fa-home active" onclick="location.href='students.html'" title="الرئيسية"></i>
+            <i class="fas fa-book" onclick="location.href='medical-library.html'" title="المكتبة"></i>
+            <i class="fas fa-flask" onclick="location.href='lab-analyzer.html'" title="محلل المختبر"></i>
+            <i class="fas fa-stethoscope" onclick="location.href='symptom-checker.html'" title="فاحص الأعراض"></i>
+            <i class="fas fa-hospital-user" onclick="location.href='pms-simulator.html'" title="إدارة المرضى"></i>
+            <i class="fas fa-cog" title="الإعدادات"></i>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-deck">
+            <section class="welcome-banner">
+                <div class="banner-blur"></div>
+                <span class="badge" style="background: var(--accent);">تم التحديث اليوم</span>
+                <h1>مرحباً بك في مركز التميز</h1>
+                <p>لديك 3 حالات جديدة في انتظار التشخيص، ومراجعة في الكيمياء الحيوية.</p>
+            </section>
+
+            <div class="module-grid">
+                <div class="module-card" onclick="location.href='pms-simulator.html'" style="background: linear-gradient(135deg, #fff, #e0f2fe);">
+                    <div class="icon-box" style="background: var(--primary); color: white;"><i class="fas fa-hospital"></i></div>
+                    <h3>نظام إدارة المرضى (PMS)</h3>
+                    <p>محاكاة كاملة لإدارة ملفات المرضى، المراقبة الحيوية، والطلبات الطبية.</p>
+                    <span class="badge" style="background: #0ea5e9; color: white;">أداة احترافية</span>
+                </div>
+
+                <div class="module-card" onclick="location.href='lab-analyzer.html'" style="background: linear-gradient(135deg, #fff, #dcfce7);">
+                    <div class="icon-box" style="background: #22c55e; color: white;"><i class="fas fa-vial"></i></div>
+                    <h3>محلل المختبر الذكي</h3>
+                    <p>أدخل نتائج الفحوصات واحصل على تحليل تفريقي ذكي (Differential Diagnosis).</p>
+                    <span class="badge" style="background: #22c55e; color: white;">قوة AI</span>
+                </div>
+
+                <div class="module-card" onclick="location.href='symptom-checker.html'">
+                    <div class="icon-box" style="background: #f43f5e; color: white;"><i class="fas fa-stethoscope"></i></div>
+                    <h3>فاحص الأعراض</h3>
+                    <p>أداة تشخيصية أولية تساعدك في ربط الأعراض بالحالات المرضية المحتملة.</p>
+                </div>
+
+                <div class="module-card" onclick="location.href='doctor-simulator.html'">
+                    <div class="icon-box"><i class="fas fa-user-md"></i></div>
+                    <h3>محاكي الطوارئ</h3>
+                    <p>اختبر سرعتك في إنقاذ الأرواح داخل غرفة الطوارئ الافتراضية.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar Stats -->
+        <aside class="stats-panel">
+            <div class="stat-item">
+                <h4 style="margin-bottom: 20px;">مستوى الإنجاز</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">أنت في المركز <strong id="academyRankDisplay">100</strong> على مستوى الأكاديمية</p>
+            </div>
+
+            <div class="stat-item">
+                <h4 style="margin-bottom: 15px;">أخبار طبية عالمية</h4>
+                <div class="news-item" style="font-size: 0.8rem; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                    <span class="badge" style="background: #fee2e2; color: #ef4444; font-size: 0.6rem;">عاجل</span>
+                    <strong>دراسة جديدة:</strong> علاج جيني واعد لمرض السكري من النوع الأول.
+                </div>
+                <div class="news-item" style="font-size: 0.8rem;">
+                    <strong>FDA:</strong> اعتماد دواء جديد لعلاج الزهايمر المبكر.
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <h4 style="margin-bottom: 15px;">قائمة المتصدرين</h4>
+                <div id="leaderboard">
+                    <div class="quick-link" style="font-size: 0.8rem;"><span>1. د. أحمد علي</span> <span style="margin-right:auto">5200</span></div>
+                    <div class="quick-link" style="font-size: 0.8rem;"><span>2. د. سارة محمد</span> <span style="margin-right:auto">4850</span></div>
+                    <div class="quick-link" style="font-size: 0.8rem;"><span>3. د. عمر (أنت)</span> <span id="score" style="margin-right:auto">0</span></div>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <h4 style="margin-bottom: 15px;">النشاط الأخير</h4>
+                <div id="recentActivity">
+                    <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">لا يوجد نشاط مسجل بعد</p>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <h4 style="margin-bottom: 15px;">روابط سريعة</h4>
+                <a href="#" class="quick-link"><i class="fas fa-file-pdf"></i> جدول الاختبارات</a>
+                <a href="#" class="quick-link"><i class="fas fa-video"></i> المحاضرات المباشرة</a>
+                <a href="#" class="quick-link"><i class="fas fa-comments"></i> منتدى الطلاب</a>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

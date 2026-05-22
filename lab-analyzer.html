@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محلل المختبر الشامل | Vitalis Lab Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 100px;
+        }
+        .lab-section {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+        }
+        .lab-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lab-field input {
+            width: 100px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .analysis-output {
+            background: #f8fafc;
+            border-radius: 25px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+        .high { background: #fee2e2; color: #ef4444; }
+        .low { background: #e0f2fe; color: #0ea5e9; }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span> Lab Pro</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="students.html">العودة للأكاديمية</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="lab-grid">
+            <div class="inputs">
+                <!-- Hematology -->
+                <div class="lab-section">
+                    <h3><i class="fas fa-tint"></i> علم الدم (Hematology)</h3>
+                    <div class="lab-field"><label>Hb (Hemoglobin)</label><input type="number" id="hb" placeholder="12-17"></div>
+                    <div class="lab-field"><label>WBC (White Blood Cells)</label><input type="number" id="wbc" placeholder="4-11"></div>
+                    <div class="lab-field"><label>PLT (Platelets)</label><input type="number" id="plt" placeholder="150-450"></div>
+                </div>
+
+                <!-- Lipid Profile -->
+                <div class="lab-section">
+                    <h3><i class="fas fa-bacon"></i> ملف الدهون (Lipids)</h3>
+                    <div class="lab-field"><label>Total Cholesterol</label><input type="number" id="chol" placeholder="<200"></div>
+                    <div class="lab-field"><label>HDL (Good)</label><input type="number" id="hdl" placeholder=">40"></div>
+                    <div class="lab-field"><label>LDL (Bad)</label><input type="number" id="ldl" placeholder="<130"></div>
+                </div>
+
+                <!-- Liver Function -->
+                <div class="lab-section">
+                    <h3><i class="fas fa-lungs"></i> وظائف الكبد (Liver)</h3>
+                    <div class="lab-field"><label>ALT (GPT)</label><input type="number" id="alt" placeholder="7-55"></div>
+                    <div class="lab-field"><label>AST (GOT)</label><input type="number" id="ast" placeholder="8-48"></div>
+                    <div class="lab-field"><label>Bilirubin Total</label><input type="number" id="bili" placeholder="0.1-1.2"></div>
+                </div>
+
+                <!-- Kidney & Electrolytes -->
+                <div class="lab-section">
+                    <h3><i class="fas fa-bolt"></i> الكلى والشوارد (Renal & Electrolytes)</h3>
+                    <div class="lab-field"><label>Creatinine</label><input type="number" id="cre" placeholder="0.7-1.3"></div>
+                    <div class="lab-field"><label>Potassium (K+)</label><input type="number" id="k" placeholder="3.6-5.2"></div>
+                    <div class="lab-field"><label>Sodium (Na+)</label><input type="number" id="na" placeholder="135-145"></div>
+                </div>
+
+                <button class="btn-primary" style="width:100%; padding:20px;" onclick="deepAnalyze()">بدء التحليل السريري المعمق</button>
+            </div>
+
+            <div class="analysis-output" id="output">
+                <div style="text-align: center; color: var(--text-muted); padding-top: 50px;">
+                    <i class="fas fa-microscope" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                    <p>أدخل القيم المخبرية وانقر على "بدء التحليل" للحصول على تقرير طبي شامل.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function deepAnalyze() {
+            const vals = {
+                hb: parseFloat(document.getElementById('hb').value),
+                wbc: parseFloat(document.getElementById('wbc').value),
+                chol: parseFloat(document.getElementById('chol').value),
+                alt: parseFloat(document.getElementById('alt').value),
+                cre: parseFloat(document.getElementById('cre').value),
+                k: parseFloat(document.getElementById('k').value)
+            };
+
+            let report = "<h2>تقرير التحليل السريري</h2><hr style='margin:15px 0;'>";
+            let alerts = [];
+
+            if (vals.hb < 12) alerts.push("<strong>فقر دم:</strong> يوصى بفحص الحديد وفيتامين B12.");
+            if (vals.wbc > 11) alerts.push("<strong>عدوى نشطة:</strong> ارتفاع كريات الدم البيضاء يشير لعملية التهابية.");
+            if (vals.chol > 240) alerts.push("<strong>فرط كوليسترول:</strong> خطر مرتفع لتصلب الشرايين.");
+            if (vals.alt > 55) alerts.push("<strong>إصابة كبدية:</strong> ارتفاع ALT يشير لضرر في خلايا الكبد.");
+            if (vals.cre > 1.3) alerts.push("<strong>قصور كلوي:</strong> يجب تقييم معدل الرشح الكبيبي (GFR).");
+            if (vals.k > 5.2) alerts.push("<strong>فرط بوتاسيوم:</strong> حالة طارئة! قد تؤثر على نظم القلب.");
+
+            if (alerts.length === 0) {
+                report += "<div style='color:#22c55e; text-align:center;'><i class='fas fa-check-circle' style='font-size:3rem;'></i><p>جميع النتائج ضمن الحدود الطبيعية.</p></div>";
+            } else {
+                report += alerts.map(a => `<div style="margin-bottom:15px; padding:15px; background:#fff; border-radius:10px; border-right:4px solid #ef4444;">${a}</div>`).join('');
+                report += "<div style='margin-top:20px; padding:15px; background:var(--accent); border-radius:10px;'><strong>نصيحة Vitalis AI:</strong> يرجى مراجعة التاريخ السريري للمريض وربطه بهذه النتائج.</div>";
+            }
+
+            document.getElementById('output').innerHTML = report;
+            if (window.addVitalisPoints) {
+                window.addVitalisPoints(250, "تحليل بروفايل مخبري كامل ومعمق");
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

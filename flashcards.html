@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز البطاقات التعليمية | Vitalis Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .flashcard-container {
+            perspective: 1000px;
+            width: 500px;
+            height: 350px;
+            margin: 150px auto 30px;
+            cursor: pointer;
+        }
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .flashcard.flipped {
+            transform: rotateY(180px);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 1.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        .card-front {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--text-main);
+        }
+        .card-back {
+            background: var(--primary);
+            color: white;
+            transform: rotateY(180px);
+        }
+        .controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="students.html">مركز الطلاب</a></li>
+                <li><a href="#" class="btn-primary">مستوى التكرار المتباعد</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="flashcard-container" onclick="this.querySelector('.flashcard').classList.toggle('flipped')">
+            <div class="flashcard">
+                <div class="card-face card-front">
+                    <p id="qText">ما هو العصب المسؤول عن تغذية العضلة الحجابية؟</p>
+                </div>
+                <div class="card-face card-back">
+                    <p id="aText">العصب الحجابي (Phrenic Nerve) الناشئ من المستويات C3, C4, C5.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="prevCard()" class="btn-secondary"><i class="fas fa-arrow-right"></i> السابق</button>
+            <button onclick="masterCard()" class="btn-primary" style="background: #22c55e;">تم الحفظ ✅</button>
+            <button onclick="nextCard()" class="btn-primary">التالي <i class="fas fa-arrow-left"></i></button>
+            <p style="margin-top: 20px; color: var(--text-muted);">انقر على البطاقة لرؤية الإجابة</p>
+        </div>
+    </div>
+
+    <script>
+        const cards = [
+            { q: "ما هو العصب المسؤول عن تغذية العضلة الحجابية؟", a: "العصب الحجابي (Phrenic Nerve) الناشئ من المستويات C3, C4, C5." },
+            { q: "ما هو الإنزيم المحفز لتحويل البيروفات إلى أسيتيل كو-أ؟", a: "إنزيم Pyruvate Dehydrogenase." },
+            { q: "ما هو الدواء المفضل (Drug of choice) لعلاج الذبحة الصدرية الحادة؟", a: "نيتروغليسرين (Nitroglycerin) تحت اللسان." }
+        ];
+        let current = 0;
+
+        function updateCard() {
+            const card = document.querySelector('.flashcard');
+            card.classList.remove('flipped');
+            setTimeout(() => {
+                document.getElementById('qText').innerText = cards[current].q;
+                document.getElementById('aText').innerText = cards[current].a;
+            }, 300);
+        }
+
+        function nextCard() {
+            current = (current + 1) % cards.length;
+            updateCard();
+        }
+
+        function prevCard() {
+            current = (current - 1 + cards.length) % cards.length;
+            updateCard();
+        }
+
+        function masterCard() {
+            if (window.addVitalisPoints) {
+                window.addVitalisPoints(50, `حفظ بطاقة تعليمية: ${cards[current].q.substring(0, 20)}...`);
+            }
+            nextCard();
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

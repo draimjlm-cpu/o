@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة الطبية الشاملة | Vitalis Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .library-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            margin-top: 100px;
+        }
+        .filter-sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            height: fit-content;
+        }
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        .filter-group h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        .filter-link {
+            display: block;
+            padding: 8px 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .filter-link:hover, .filter-link.active {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .article-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+        .article-card::after {
+            content: 'اقرأ المزيد';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            transition: 0.3s;
+        }
+        .article-card:hover::after {
+            bottom: 0;
+        }
+        .tag {
+            font-size: 0.7rem;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="students.html">مركز الطلاب</a></li>
+                <li><a href="#" class="btn-primary">المكتبة الرقمية</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="library-layout">
+            <aside class="filter-sidebar">
+                <div class="filter-group">
+                    <h4>التخصصات</h4>
+                    <a href="#" class="filter-link active">الكل</a>
+                    <a href="#" class="filter-link">الجراحة العامة</a>
+                    <a href="#" class="filter-link">الطب الباطني</a>
+                    <a href="#" class="filter-link">الأطفال</a>
+                    <a href="#" class="filter-link">النسائية والتوليد</a>
+                    <a href="#" class="filter-link">الأشعة والتصوير</a>
+                </div>
+                <div class="filter-group">
+                    <h4>نوع المحتوى</h4>
+                    <a href="#" class="filter-link">ملخصات PDF</a>
+                    <a href="#" class="filter-link">محاضرات فيديو</a>
+                    <a href="#" class="filter-link">أبحاث حديثة</a>
+                </div>
+            </aside>
+
+            <main>
+                <div style="margin-bottom: 40px;">
+                    <h1>مكتبة المعرفة الطبية</h1>
+                    <p>أكثر من 500 موضوع طبي محدث وفقاً لأحدث المراجع العالمية (Oxford, Harrison, Nelson).</p>
+                </div>
+
+                <div class="article-grid">
+                    <div class="article-card">
+                        <span class="tag">باطنية</span>
+                        <h3>إدارة ارتفاع ضغط الدم (2026)</h3>
+                        <p>دليل شامل للبروتوكولات الحديثة في التعامل مع ضغط الدم المرتفع.</p>
+                    </div>
+                    <div class="article-card">
+                        <span class="tag">جراحة</span>
+                        <h3>تطورات جراحة المناظير</h3>
+                        <p>نظرة تقنية على الأدوات الجديدة في الجراحة المجهرية والمناظير.</p>
+                    </div>
+                    <div class="article-card">
+                        <span class="tag">أطفال</span>
+                        <h3>تطعيمات الأطفال المحدثة</h3>
+                        <p>جدول التطعيمات العالمي الجديد لعام 2026 وأهم التغييرات.</p>
+                    </div>
+                    <div class="article-card">
+                        <span class="tag">أشعة</span>
+                        <h3>أساسيات قراءة الرنين المغناطيسي</h3>
+                        <p>دورة مكثفة لطلاب الطب في تفسير صور الـ MRI للدماغ والعمود الفقري.</p>
+                    </div>
+                    <div class="article-card">
+                        <span class="tag">طوارئ</span>
+                        <h3>الإنعاش القلبي الرئوي المتقدم</h3>
+                        <p>دليل ACLS المحدث للتعامل مع حالات توقف القلب المفاجئ.</p>
+                    </div>
+                    <div class="article-card">
+                        <span class="tag">تخدير</span>
+                        <h3>التخدير الموضعي في الطوارئ</h3>
+                        <p>أفضل الممارسات لتخدير الجروح السطحية والكسور البسيطة.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

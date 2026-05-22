@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فاحص الأعراض الذكي | Vitalis Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .symptom-container {
+            max-width: 800px;
+            margin: 120px auto 60px;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+        }
+        .symptom-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .symptom-item {
+            padding: 15px;
+            border: 2px solid var(--glass-border);
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .symptom-item.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .results-area {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 20px;
+            display: none;
+        }
+        .diagnosis-item {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-right: 5px solid var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span> Symptom AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="students.html">العودة للأكاديمية</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="symptom-container">
+            <h2>ما هي الأعراض التي تشعر بها؟</h2>
+            <p>اختر الأعراض الظاهرة للحصول على تحليل احتمالي مدعوم بقاعدة بيانات Vitalis الطبية.</p>
+
+            <div class="symptom-selector" id="symptomList">
+                <div class="symptom-item" onclick="toggleSymptom(this, 'حمى')">حمى</div>
+                <div class="symptom-item" onclick="toggleSymptom(this, 'سعال جاف')">سعال جاف</div>
+                <div class="symptom-item" onclick="toggleSymptom(this, 'ضيق تنفس')">ضيق تنفس</div>
+                <div class="symptom-item" onclick="toggleSymptom(this, 'صداع')">صداع</div>
+                <div class="symptom-item" onclick="toggleSymptom(this, 'فقدان تذوق')">فقدان تذوق</div>
+                <div class="symptom-item" onclick="toggleSymptom(this, 'ألم مفاصل')">ألم مفاصل</div>
+                <div class="symptom-item" onclick="toggleSymptom(this, 'غثيان')">غثيان</div>
+                <div class="symptom-item" onclick="toggleSymptom(this, 'تعب عام')">تعب عام</div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; margin-top: 30px;" onclick="checkSymptoms()">تحليل الأعراض</button>
+
+            <div id="resultsArea" class="results-area">
+                <h3>النتائج المحتملة:</h3>
+                <div id="diagnosisList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const selectedSymptoms = new Set();
+
+        function toggleSymptom(el, name) {
+            if (selectedSymptoms.has(name)) {
+                selectedSymptoms.delete(name);
+                el.classList.remove('selected');
+            } else {
+                selectedSymptoms.add(name);
+                el.classList.add('selected');
+            }
+        }
+
+        function checkSymptoms() {
+            if (selectedSymptoms.size === 0) {
+                alert("يرجى اختيار عرض واحد على الأقل.");
+                return;
+            }
+
+            const resultsArea = document.getElementById('resultsArea');
+            const list = document.getElementById('diagnosisList');
+            resultsArea.style.display = 'block';
+            list.innerHTML = "";
+
+            // Simple logic for simulation
+            if (selectedSymptoms.has('حمى') && selectedSymptoms.has('سعال جاف') && selectedSymptoms.has('فقدان تذوق')) {
+                addDiagnosis(list, "اشتباه كوفيد-19 (COVID-19)", "90%", "يوصى بإجراء مسحة PCR وعزل منزلي.");
+            }
+            
+            if (selectedSymptoms.has('صداع') && selectedSymptoms.has('غثيان')) {
+                addDiagnosis(list, "صداع نصفي (Migraine)", "75%", "يفضل البقاء في مكان مظلم وهادئ.");
+            }
+
+            if (selectedSymptoms.has('حمى') && selectedSymptoms.has('ألم مفاصل')) {
+                addDiagnosis(list, "إنفلونزا موسمية", "60%", "راحة تامة وسوائل كافية.");
+            }
+
+            if (list.innerHTML === "") {
+                list.innerHTML = "<p>الأعراض غير كافية لتحديد حالة معينة. يرجى مراجعة الطبيب المختص.</p>";
+            }
+
+            if (window.addVitalisPoints) {
+                window.addVitalisPoints(100, "استخدام فاحص الأعراض الذكي");
+            }
+        }
+
+        function addDiagnosis(parent, title, prob, advice) {
+            parent.innerHTML += `
+                <div class="diagnosis-item">
+                    <div style="display:flex; justify-content:space-between;">
+                        <strong>${title}</strong>
+                        <span class="badge" style="background:var(--accent)">احتمالية: ${prob}</span>
+                    </div>
+                    <p style="font-size:0.9rem; margin-top:10px;">${advice}</p>
+                </div>
+            `;
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

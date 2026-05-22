@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكي الطبيب | Vitalis Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sim-container {
+            max-width: 800px;
+            margin: 120px auto 60px;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .scene-image {
+            width: 100%;
+            height: 250px;
+            background: #f1f5f9;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+        }
+        .dialogue-box {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border-right: 5px solid var(--primary);
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        .choice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .choice-btn {
+            padding: 15px 25px;
+            background: white;
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: right;
+            font-family: var(--font-ar);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .choice-btn:hover {
+            background: var(--accent);
+            border-color: var(--primary);
+            transform: translateX(-5px);
+        }
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border-radius: 15px;
+        }
+        .progress-indicator {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="students.html">مركز الطلاب</a></li>
+                <li><a href="#" class="btn-primary">الحالة: غرفة الطوارئ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="sim-container">
+            <div class="hud">
+                <div>سمعة الطبيب: <span id="rep">100</span></div>
+                <div>وقت الحالة: <span id="time">08:00 ص</span></div>
+            </div>
+
+            <div id="gameContent">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const story = {
+            start: {
+                image: "fa-hospital-user",
+                text: "دخل رجل يبلغ من العمر 55 عاماً إلى غرفة الطوارئ وهو يمسك بصدره. يبدو شاحباً ويتعرق بغزارة. يقول: 'أشعر بضغط شديد في صدري، كأن فيلاً يجلس فوقي'. ما هو إجراءك الأول؟",
+                choices: [
+                    { text: "إجراء تخطيط قلب (ECG) فوراً", next: "ecg_done", rep: 10 },
+                    { text: "سؤاله عن تاريخه الطبي بالتفصيل", next: "history_fail", rep: -5 },
+                    { text: "إعطاءه مسكن آلام عادي وانتظار الطبيب المناوب", next: "fail_dead", rep: -50 }
+                ]
+            },
+            ecg_done: {
+                image: "fa-heart-pulse",
+                text: "يظهر تخطيط القلب ارتفاعاً ملحوظاً في قطاع ST (ST-elevation) في المساري الأمامية. المريض يعاني من احتشاء عضلة قلبية حاد (STEMI). ما هي الخطوة التالية؟",
+                choices: [
+                    { text: "إعطاء أسبرين 300 ملغ ومميعات فورية", next: "meds_done", rep: 20 },
+                    { text: "طلب تحاليل دم روتينية وانتظار النتائج", next: "delay_fail", rep: -10 }
+                ]
+            },
+            history_fail: {
+                image: "fa-clock",
+                text: "بينما كنت تسأله، بدأ المريض يفقد الوعي. الوقت في حالات القلب يعني موت الخلايا. لقد أضعت وقتاً ثميناً!",
+                choices: [
+                    { text: "العودة وإجراء تخطيط القلب فوراً", next: "ecg_done", rep: 0 }
+                ]
+            },
+            meds_done: {
+                image: "fa-stretcher",
+                text: "استقر وضع المريض قليلاً بعد الأدوية. الآن يجب نقله إلى غرفة القسطرة (Cath Lab) لفتح الشريان المسدود. لقد أنقذت حياة المريض بنجاح!",
+                choices: [
+                    { text: "بدء حالة جديدة", next: "start", rep: 0 }
+                ]
+            },
+            fail_dead: {
+                image: "fa-skull-crossbones",
+                text: "للأسف، تدهورت حالة المريض بسرعة وتوقف قلبه. المسكنات لا تعالج الجلطة. لقد فشلت في هذه الحالة.",
+                choices: [
+                    { text: "محاولة مرة أخرى", next: "start", rep: 0 }
+                ]
+            }
+        };
+
+        let reputation = 100;
+
+        function renderScene(sceneId) {
+            const scene = story[sceneId];
+            const container = document.getElementById('gameContent');
+            
+            container.innerHTML = `
+                <div class="scene-image"><i class="fas ${scene.image}"></i></div>
+                <div class="dialogue-box">${scene.text}</div>
+                <div class="choice-list">
+                    ${scene.choices.map(c => `
+                        <button class="choice-btn" onclick="makeChoice('${c.next}', ${c.rep})">${c.text}</button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function makeChoice(nextId, repChange) {
+            reputation += repChange;
+            document.getElementById('rep').innerText = reputation;
+            
+            if (repChange > 0 && window.addVitalisPoints) {
+                window.addVitalisPoints(repChange * 10, "اتخاذ قرار طبي حكيم في المحاكي");
+            }
+            
+            renderScene(nextId);
+        }
+
+        renderScene('start');
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

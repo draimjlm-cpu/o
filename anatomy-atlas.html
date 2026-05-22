@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أطلس التشريح التفاعلي | Vitalis Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .atlas-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-top: 50px;
+        }
+        .body-map {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            border: 1px solid var(--glass-border);
+        }
+        .human-svg {
+            height: 600px;
+            fill: #e2e8f0;
+        }
+        .organ-hotspot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.2);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+        .info-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--glass-border);
+            height: fit-content;
+        }
+        .organ-detail {
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Vitalis Clinic Logo" class="app-logo">
+                <span>Vitalis<span>Clinic</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="students.html">مركز الطلاب</a></li>
+                <li><a href="#" class="btn-primary">استكشاف الأعضاء</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 120px;">
+        <div class="section-title">
+            <h2>أطلس التشريح البشري</h2>
+            <p>انقر على النقاط الزرقاء لاستكشاف تفاصيل الأعضاء والوظائف الحيوية.</p>
+        </div>
+
+        <div class="atlas-container">
+            <div class="body-map">
+                <!-- Simple representation of a human body -->
+                <i class="fas fa-user" style="font-size: 500px; color: #f1f5f9;"></i>
+                
+                <!-- Hotspots -->
+                <div class="organ-hotspot" style="top: 80px; left: 50%;" onclick="showOrgan('brain')"></div>
+                <div class="organ-hotspot" style="top: 180px; left: 50%;" onclick="showOrgan('heart')"></div>
+                <div class="organ-hotspot" style="top: 200px; left: 45%;" onclick="showOrgan('lung')"></div>
+                <div class="organ-hotspot" style="top: 250px; left: 50%;" onclick="showOrgan('liver')"></div>
+                <div class="organ-hotspot" style="top: 320px; left: 50%;" onclick="showOrgan('stomach')"></div>
+            </div>
+
+            <div class="info-panel" id="infoPanel">
+                <div id="defaultMsg">
+                    <h3>بوابة الاستكشاف</h3>
+                    <p>اختر عضواً من الخريطة للبدء في دراسته.</p>
+                </div>
+
+                <div id="brain" class="organ-detail">
+                    <i class="fas fa-brain" style="font-size: 3rem; color: var(--primary); margin-bottom: 15px;"></i>
+                    <h3>الدماغ (Brain)</h3>
+                    <p>مركز التحكم الرئيسي في الجسم. يتكون من المخ، المخيخ، وجذع الدماغ.</p>
+                    <hr style="margin: 15px 0;">
+                    <strong>أهم الوظائف:</strong>
+                    <ul>
+                        <li>تنسيق الحركة</li>
+                        <li>المعالجة الحسية</li>
+                        <li>الوظائف الإدراكية العليا</li>
+                    </ul>
+                </div>
+
+                <div id="heart" class="organ-detail">
+                    <i class="fas fa-heartbeat" style="font-size: 3rem; color: #ef4444; margin-bottom: 15px;"></i>
+                    <h3>القلب (Heart)</h3>
+                    <p>عضلة جوفاء تعمل كمضخة للدم في الدورة الدموية الكبرى والصغرى.</p>
+                    <hr style="margin: 15px 0;">
+                    <strong>الحقائق الطبية:</strong>
+                    <ul>
+                        <li>ينبض حوالي 100,000 مرة يومياً</li>
+                        <li>يضخ 5 لترات من الدم كل دقيقة</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showOrgan(id) {
+            document.getElementById('defaultMsg').style.display = 'none';
+            document.querySelectorAll('.organ-detail').forEach(el => el.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+    </script>
+</body>
+</html>
